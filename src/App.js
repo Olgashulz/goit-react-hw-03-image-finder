@@ -2,17 +2,50 @@ import { Component } from 'react';
 import { ToastContainer } from 'react-toastify';
 import Searchbar from './components/Searchbar';
 import ImageGallery from './components/ImageGallery';
+import Button from './components/Button';
+import Modal from './components/Modal';
 
 export default class App extends Component {
   state = {
     inputValue: '',
-    images: {},
-    loading: false,
+    image: {},
+    page: 1,
+    showModal: false,
+    largeImage: null,
+    alt: null,
   };
 
   handleSearchSubmit = inputValue => {
     console.log(inputValue);
     this.setState({ inputValue });
+  };
+
+  onLoadMore = event => {
+    this.setState(prevState => ({
+      page: prevState.page + 1,
+    }));
+    this.handleSearchSubmit(this.state.inputValue);
+  };
+
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
+    // this.setState({ largeImage: event.target.attributes['data-largeimage'].value })
+    // this.takeModalImage(event);
+  };
+
+  takeModalImage = event => {
+    if (!event.target) {
+      return;
+    } else {
+      this.setState({
+        largeImage: event.target.attributes['data-largeimage'].value,
+      });
+    }
+
+    console.log(event.target.attributes);
+    this.toggleModal();
   };
 
   // componentDidMount() {
@@ -28,10 +61,18 @@ export default class App extends Component {
 
   // }
   render() {
+    const { inputValue, showModal, largeImage } = this.state;
     return (
       <div style={{ maxWidth: 1170, margin: '0 auto', padding: 20 }}>
         <Searchbar onSubmit={this.handleSearchSubmit} />
-        <ImageGallery inputValue={this.state.inputValue} />
+        <ImageGallery inputValue={inputValue} onOpen={this.takeModalImage} />
+        <Button onLoadMore={this.onLoadMore} />
+        {showModal && (
+          <Modal onClose={this.toggleModal}>
+            <img src={largeImage} alt={inputValue} />
+          </Modal>
+        )}
+
         <ToastContainer autoClose={2500} />
       </div>
     );
