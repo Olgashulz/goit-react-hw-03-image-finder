@@ -8,6 +8,7 @@ export default class ImageGallery extends Component {
     images: [],
     error: null,
     status: 'resolved',
+    page: 1,
   };
 
   componentDidUpdate(prevProps, PrevState) {
@@ -16,26 +17,26 @@ export default class ImageGallery extends Component {
     if (prevProps.inputValue !== inputValue) {
       this.setState({ status: 'pending' });
 
-      setTimeout(() => {
-        fetch(
-          `https://pixabay.com/api/?key=10507999-623e060cae639baa9b9819f90&q=${inputValue}&page=${this.props.page}&image_type=photo`,
+      // setTimeout(() => {
+      fetch(
+        `https://pixabay.com/api/?key=10507999-623e060cae639baa9b9819f90&q=${inputValue}&page=${this.page}&image_type=photo`,
+      )
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          }
+          return Promise.reject({
+            error: new Error(
+              `Your request ${inputValue} did not return any results`,
+            ),
+          });
+        })
+        // .then(res => res.json())
+        .then(images =>
+          this.setState({ images: images.hits, status: 'resolved' }),
         )
-          .then(response => {
-            if (response.ok) {
-              return response.json();
-            }
-            return Promise.reject({
-              error: new Error(
-                `Your request ${inputValue} did not return any results`,
-              ),
-            });
-          })
-          // .then(res => res.json())
-          .then(images =>
-            this.setState({ images: images.hits, status: 'resolved' }),
-          )
-          .catch(error => this.setState({ error, status: 'rejected' }));
-      }, 200);
+        .catch(error => this.setState({ error, status: 'rejected' }));
+      // }, 200);
     }
   }
   render() {
