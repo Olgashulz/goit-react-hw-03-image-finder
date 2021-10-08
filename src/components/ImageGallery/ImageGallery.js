@@ -18,7 +18,7 @@ export default class ImageGallery extends Component {
 
       setTimeout(() => {
         fetch(
-          `https://pixabay.com/api/?key=10507999-623e060cae639baa9b9819f90&q=${inputValue}&image_type=photo`,
+          `https://pixabay.com/api/?key=10507999-623e060cae639baa9b9819f90&q=${inputValue}&page=${this.props.page}&image_type=photo`,
         )
           .then(response => {
             if (response.ok) {

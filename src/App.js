@@ -61,11 +61,15 @@ export default class App extends Component {
 
   // }
   render() {
-    const { inputValue, showModal, largeImage } = this.state;
+    const { inputValue, showModal, largeImage, page } = this.state;
     return (
       <div style={{ maxWidth: 1170, margin: '0 auto', padding: 20 }}>
         <Searchbar onSubmit={this.handleSearchSubmit} />
-        <ImageGallery inputValue={inputValue} onOpen={this.takeModalImage} />
+        <ImageGallery
+          inputValue={inputValue}
+          onOpen={this.takeModalImage}
+          page={page}
+        />
         <Button onLoadMore={this.onLoadMore} />
         {showModal && (
           <Modal onClose={this.toggleModal}>
