@@ -2,41 +2,34 @@ import React, { Component } from 'react';
 import ImageGalleryItem from '../ImageGalleryItem';
 import ErrorResponse from '../ErrorResponse';
 import LoaderFnc from '../Loader';
+import { fetchImages } from '../../servises/app';
 
 export default class ImageGallery extends Component {
   state = {
     images: [],
     error: null,
     status: 'resolved',
-    page: 1,
+    // page: 1,
   };
 
-  componentDidUpdate(prevProps, PrevState) {
+  async componentDidUpdate(prevProps, PrevState) {
     const inputValue = this.props.inputValue;
+    const page = this.props.page;
 
-    if (prevProps.inputValue !== inputValue) {
-      this.setState({ status: 'pending' });
+    if (prevProps.inputValue !== inputValue || prevProps.page !== page) {
+      try {
+        this.setState({ status: 'pending' });
+        const gallery = await fetchImages(inputValue, page);
 
-      // setTimeout(() => {
-      fetch(
-        `https://pixabay.com/api/?key=10507999-623e060cae639baa9b9819f90&q=${inputValue}&page=${this.page}&image_type=photo`,
-      )
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          }
-          return Promise.reject({
-            error: new Error(
-              `Your request ${inputValue} did not return any results`,
-            ),
-          });
-        })
-        // .then(res => res.json())
-        .then(images =>
-          this.setState({ images: images.hits, status: 'resolved' }),
-        )
-        .catch(error => this.setState({ error, status: 'rejected' }));
-      // }, 200);
+        this.setState({ status: 'resolved' });
+
+        this.setState(prevState => ({
+          images: [...prevState.images, ...gallery],
+        }));
+        this.props.takeImages(this.state.images);
+      } catch (error) {
+        this.setState({ error, status: 'rejected' });
+      }
     }
   }
   render() {
@@ -58,16 +51,6 @@ export default class ImageGallery extends Component {
     if (status === 'resolved') {
       return (
         <ul className="ImageGallery">
-          {/* {images.map(({ id, webformatURL, tags, largeImageURL }) => (
-            <ImageGalleryItem
-              toggle={toggle}
-              key={id}
-              src={webformatURL}
-              modalSrc={largeImageURL}
-              alt={tags.split(' ')}
-            />
-          ))} */}
-
           <ImageGalleryItem images={images} onToggle={onOpen} />
         </ul>
       );

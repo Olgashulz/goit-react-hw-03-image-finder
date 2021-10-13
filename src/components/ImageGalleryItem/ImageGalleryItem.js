@@ -11,11 +11,15 @@ const ImageGalleryItem = ({ onToggle, images }) => {
     <>
       {images.map(item => {
         return (
-          <li onClick={onToggle} className="ImageGalleryItem" key={item.id}>
+          <li
+            onClick={() => onToggle(item.largeImageURL)}
+            className="ImageGalleryItem"
+            key={item.id}
+          >
             <img
               src={item.webformatURL}
-              alt={item.tags[0]}
-              className="ImageGalleryItem__image"
+              alt={item.tags}
+              className="ImageGalleryItem-image"
               data-largeimage={item.largeImageURL}
             />
           </li>

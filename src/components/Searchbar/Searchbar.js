@@ -20,6 +20,7 @@ export default class Searchbar extends Component {
     }
 
     this.props.onSubmit(this.state.inputValue);
+    this.props.removeImages();
     this.setState({ inputValue: '' });
   };
 
