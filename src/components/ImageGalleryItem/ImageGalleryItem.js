@@ -1,11 +1,5 @@
 import React from 'react';
 
-// const ImageGalleryItem = ({ id, src, alt, modalSrc, toggle }) => (
-//   <li className="ImageGalleryItem" key={id}>
-//     <img src={src} alt={alt[0]} className="ImageGalleryItem-image" onClick={() => toggle(modalSrc)} />
-//   </li>
-// );
-
 const ImageGalleryItem = ({ onToggle, images }) => {
   return (
     <>
@@ -18,7 +12,7 @@ const ImageGalleryItem = ({ onToggle, images }) => {
           >
             <img
               src={item.webformatURL}
-              alt={item.tags}
+              alt={item.tags[0]}
               className="ImageGalleryItem-image"
               data-largeimage={item.largeImageURL}
             />

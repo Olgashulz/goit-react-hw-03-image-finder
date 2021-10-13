@@ -16,12 +16,16 @@ export default class Searchbar extends Component {
     event.preventDefault();
 
     if (this.state.inputValue.trim() === '') {
-      return toast.error('Please enter keyword.', {});
+      return toast.error('Please enter keyword.');
+    }
+
+    if (this.state.inputValue.trim() === '') {
+      console.log('параметры поиска совпадают');
     }
 
     this.props.onSubmit(this.state.inputValue);
     this.props.removeImages();
-    this.setState({ inputValue: '' });
+    // this.setState({ inputValue: '' });
   };
 
   render() {
@@ -39,7 +43,7 @@ export default class Searchbar extends Component {
             onChange={this.handleInputValueChange}
             // autocomplete="off"
             // autofocus
-            // placeholder="Search images and photos"
+            placeholder="Search images and photos"
           />
         </form>
       </header>

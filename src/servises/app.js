@@ -9,6 +9,5 @@ export const fetchImages = async (inputValue, page) => {
       error: new Error(`Your request ${inputValue} did not return any results`),
     });
   });
-  // console.log(dataImages.hits)
   return dataImages.hits;
 };
