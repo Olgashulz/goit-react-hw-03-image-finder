@@ -57,6 +57,10 @@ export default class App extends Component {
     this.setState({ inputValue });
   };
 
+  removeImages = () => {
+    this.setState({ images: [] });
+  };
+
   onLoadMore = event => {
     this.setState(prevState => ({
       page: prevState.page + 1,
@@ -71,20 +75,23 @@ export default class App extends Component {
     this.setState({ largeImage: largeImage });
   };
 
-  // resetState = () => {
-  //   this.setState({
-  //     setOfImages: [],
-  //     page: 1,
-  //     error: null,
-  //   });
-  // };
+  resetState = () => {
+    this.setState({
+      setOfImages: [],
+      page: 1,
+      error: null,
+    });
+  };
 
   render() {
     const { status, error, inputValue, showModal, largeImage, images } =
       this.state;
     return (
       <div className="container">
-        <Searchbar onSubmit={this.handleSearchSubmit} />
+        <Searchbar
+          onSubmit={this.handleSearchSubmit}
+          removeImages={this.removeImages}
+        />
 
         {status === 'pending' && <Loader />}
         {status === 'rejected' && <ErrorResponse message={error.message} />}
