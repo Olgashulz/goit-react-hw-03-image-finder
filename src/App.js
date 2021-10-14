@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { ToastContainer } from 'react-toastify';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 
 import Searchbar from './components/Searchbar';
 import ImageGallery from './components/ImageGallery';
@@ -68,11 +68,19 @@ export default class App extends Component {
     this.setState({ largeImage: largeImage });
   };
 
+  resetState = () => {
+    this.setState({
+      setOfImages: [],
+      page: 1,
+      error: null,
+    });
+  };
+
   render() {
     const { status, error, inputValue, showModal, largeImage, images } =
       this.state;
     return (
-      <div style={{ maxWidth: 1170, margin: '0 auto', padding: 20 }}>
+      <div className="container">
         <Searchbar
           onSubmit={this.handleSearchSubmit}
           removeImages={this.removeImages}
@@ -87,7 +95,7 @@ export default class App extends Component {
 
         {showModal && (
           <Modal onClose={this.toggleModal}>
-            <img src={largeImage} alt={inputValue} />
+            <img src={largeImage} alt={inputValue} className="LargeImg" />
           </Modal>
         )}
         <ToastContainer autoClose={2500} />

@@ -6,7 +6,7 @@ export default function LoaderFnc() {
     <div className="loaderContainer">
       <Loader
         type="ThreeDots"
-        color="#3f51b5"
+        color="#000"
         height={50}
         width={50}
         timeout={3000}

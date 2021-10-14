@@ -31,11 +31,8 @@ export default class Searchbar extends Component {
   render() {
     return (
       <header className="Searchbar">
+        <h1 className="Title">Image Gallery</h1>
         <form className="SearchForm" onSubmit={this.handleOnSubmit}>
-          <button type="submit" className="SearchForm-button">
-            <span className="SearchForm-button-label">Search</span>
-          </button>
-
           <input
             className="SearchForm-input"
             type="text"
@@ -45,6 +42,9 @@ export default class Searchbar extends Component {
             // autofocus
             placeholder="Search images and photos"
           />
+          <button type="submit" className="SearchForm-button">
+            <span className="SearchForm-button-label">Search</span>
+          </button>
         </form>
       </header>
     );
