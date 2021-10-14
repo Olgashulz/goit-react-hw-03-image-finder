@@ -77,7 +77,7 @@ export default class App extends Component {
 
   resetState = () => {
     this.setState({
-      setOfImages: [],
+      images: [],
       page: 1,
       error: null,
     });
@@ -91,6 +91,7 @@ export default class App extends Component {
         <Searchbar
           onSubmit={this.handleSearchSubmit}
           removeImages={this.removeImages}
+          resetState={this.resetState}
         />
 
         {status === 'pending' && <Loader />}

@@ -27,7 +27,9 @@ export default class Searchbar extends Component {
   render() {
     return (
       <header className="Searchbar">
-        <h1 className="Title">Image Gallery</h1>
+        <a href="#" onClick={() => this.props.resetState()} className="link">
+          <h1 className="Title">Image Gallery</h1>
+        </a>
         <form className="SearchForm" onSubmit={this.handleOnSubmit}>
           <input
             className="SearchForm-input"
@@ -50,4 +52,5 @@ export default class Searchbar extends Component {
 Searchbar.proTotypes = {
   onSubmit: PropTypes.func.isRequired,
   removeImages: PropTypes.func.isRequired,
+  resetState: PropTypes.func,
 };
