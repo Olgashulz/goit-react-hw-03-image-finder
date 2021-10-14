@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -8,7 +9,6 @@ export default class Searchbar extends Component {
   };
 
   handleInputValueChange = event => {
-    // console.log(event.currentTarget.value.toLowerCase())
     this.setState({ inputValue: event.currentTarget.value.toLowerCase() });
   };
 
@@ -19,12 +19,8 @@ export default class Searchbar extends Component {
       return toast.error('Please enter keyword.');
     }
 
-    if (this.state.inputValue.trim() === '') {
-      console.log('параметры поиска совпадают');
-    }
-
     this.props.onSubmit(this.state.inputValue);
-    this.props.removeImages();
+    // this.props.removeImages();
     // this.setState({ inputValue: '' });
   };
 
@@ -50,3 +46,7 @@ export default class Searchbar extends Component {
     );
   }
 }
+
+Searchbar.proTotypes = {
+  onSubmit: PropTypes.func.isRequired,
+};

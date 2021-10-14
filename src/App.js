@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { ToastContainer } from 'react-toastify';
-// import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import Searchbar from './components/Searchbar';
 import ImageGallery from './components/ImageGallery';
@@ -29,8 +29,15 @@ export default class App extends Component {
         this.setState({ status: 'pending' });
         const gallery = await fetchImages(inputValue, page);
 
-        this.setState({ status: 'resolved' });
+        if (gallery.length < 1 && page !== 1) {
+          return toast.error(`Sorry, that's all there is to your request. `);
+        }
 
+        if (gallery.length < 1) {
+          return toast.error('Sorry, no results were found.');
+        }
+
+        this.setState({ status: 'resolved' });
         this.setState(prevState => ({
           images: [...prevState.images, ...gallery],
         }));
@@ -50,10 +57,6 @@ export default class App extends Component {
     this.setState({ inputValue });
   };
 
-  removeImages = () => {
-    this.setState({ images: [] });
-  };
-
   onLoadMore = event => {
     this.setState(prevState => ({
       page: prevState.page + 1,
@@ -68,23 +71,20 @@ export default class App extends Component {
     this.setState({ largeImage: largeImage });
   };
 
-  resetState = () => {
-    this.setState({
-      setOfImages: [],
-      page: 1,
-      error: null,
-    });
-  };
+  // resetState = () => {
+  //   this.setState({
+  //     setOfImages: [],
+  //     page: 1,
+  //     error: null,
+  //   });
+  // };
 
   render() {
     const { status, error, inputValue, showModal, largeImage, images } =
       this.state;
     return (
       <div className="container">
-        <Searchbar
-          onSubmit={this.handleSearchSubmit}
-          removeImages={this.removeImages}
-        />
+        <Searchbar onSubmit={this.handleSearchSubmit} />
 
         {status === 'pending' && <Loader />}
         {status === 'rejected' && <ErrorResponse message={error.message} />}

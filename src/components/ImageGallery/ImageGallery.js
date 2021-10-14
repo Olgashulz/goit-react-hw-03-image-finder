@@ -1,4 +1,5 @@
 import ImageGalleryItem from '../ImageGalleryItem';
+import PropTypes from 'prop-types';
 
 const ImageGallery = ({ images, onOpen }) => {
   return (
@@ -8,3 +9,8 @@ const ImageGallery = ({ images, onOpen }) => {
   );
 };
 export default ImageGallery;
+
+ImageGallery.proTotypes = {
+  onOpen: PropTypes.func.isRequired,
+  images: PropTypes.array.isRequired,
+};

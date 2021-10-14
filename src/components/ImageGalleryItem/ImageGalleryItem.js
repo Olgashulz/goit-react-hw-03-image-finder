@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const ImageGalleryItem = ({ onToggle, images }) => {
   return (
@@ -24,3 +25,8 @@ const ImageGalleryItem = ({ onToggle, images }) => {
 };
 
 export default ImageGalleryItem;
+
+ImageGalleryItem.proTotypes = {
+  onToggle: PropTypes.func.isRequired,
+  images: PropTypes.array.isRequired,
+};
