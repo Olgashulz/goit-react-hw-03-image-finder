@@ -57,6 +57,11 @@ export default class App extends Component {
     this.setState({ inputValue });
   };
 
+  //  handleSearchSubmit = inputValue => {
+  //   console.log(inputValue);
+  //   this.setState({ inputValue, images: [], page: 1 });
+  // };
+
   removeImages = () => {
     this.setState({ images: [] });
   };
